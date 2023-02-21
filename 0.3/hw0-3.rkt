@@ -21,26 +21,38 @@
 
 ; Exercise 3 - Define differences
 (define (differences nums)
-  ;your code here
- (error "Not yet implemented")
+(if (= (count nums) 1)
+      '()
+      (se (- (first (bf nums)) (first nums))
+          (differences (bf nums))))
 )
 
 ; Exercise 4 - Define location
+(define (location-helper small big count)
+(cond ((empty? big) #f)
+        ((equal? small (first big))
+         count)
+        (else (location-helper small (bf big) (+ count 1))))
+)
+
 (define (location small big)
-  ; your code here
- (error "Not yet implemented")
+  (location-helper small big 1)
 )
 
 ; Exercise 5 - Define initials
 (define (initials sent)
-  ; your code here
- (error "Not yet implemented")
+ (if (empty? sent)
+      '()
+      (se (first (first sent))
+	  (initials (bf sent))))
 )
 
 ; Exercise 6 - Define copies
 (define (copies num wd)
-  ; your code here
- (error "Not yet implemented")
+  (if (= num 0)
+      '()
+      (se wd 
+	  (copies (- num 1) wd)))
 )
 
 ; Exercise 7 - Define gpa
