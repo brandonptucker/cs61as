@@ -36,7 +36,9 @@
 )
 
 (define (location small big)
-  (location-helper small big 1)
+  (cond ((not (member? small big)) #f) 
+        ((equal? small (first big)) 1)
+        (else (+ 1 (location small (bf big)))))
 )
 
 ; Exercise 5 - Define initials
@@ -56,19 +58,53 @@
 )
 
 ; Exercise 7 - Define gpa
+(define (base-grade grade)
+  (cond ((equal? (first grade) 'A) 4)
+        ((equal? (first grade) 'B) 3)
+        ((equal? (first grade) 'C) 2)
+        ((equal? (first grade) 'D) 1)
+        (else 0))
+)
+
+(define (grade-modifier grade)
+  (cond ((equal? (last grade) '+) .33)
+        ((equal? (last grade) '-) -.33)
+        (0))
+)
+
+(define (gpa-helper grades)
+  (if (empty? grades)
+      0
+      (+ (base-grade (first grades)) 
+         (grade-modifier (first grades)) 
+         (gpa-helper (bf grades))))
+)
+
 (define (gpa grades)
-  ; your code here
- (error "Not yet implemented")
+  (/ (gpa-helper grades) (count grades))
 )
 
 ; Exercise 8 - Define repeat-words
+(define (repeat-word wd count)
+  (if (= count 1)
+      '()
+      (se wd (repeat-word wd (- count 1))))
+)
+
 (define (repeat-words sent)
-  ; your code here
- (error "Not yet implemented")
+  (cond ((empty? sent) '())
+        ((number? (first sent)) (se (repeat-word (first (bf sent)) (first sent)) (repeat-words (bf sent))))
+        (else (se (first sent) (repeat-words (bf sent)))))
 )
 
 ; Exercise 9 - Define same-shape?
+(define (count-not-equal? a b)
+  (not (= (count a) (count b)))
+)
+
 (define (same-shape? sent1 sent2)
-  ; your code here
- (error "Not yet implemented")
+  (cond ((count-not-equal? sent1 sent2) #f)
+        ((empty? sent1) #t)
+        ((count-not-equal? (first sent1) (first sent2)) #f)
+        (else (same-shape? (bf sent1) (bf sent2))))
 )
