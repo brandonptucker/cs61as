@@ -28,13 +28,6 @@
 )
 
 ; Exercise 4 - Define location
-(define (location-helper small big count)
-(cond ((empty? big) #f)
-        ((equal? small (first big))
-         count)
-        (else (location-helper small (bf big) (+ count 1))))
-)
-
 (define (location small big)
   (cond ((not (member? small big)) #f) 
         ((equal? small (first big)) 1)
